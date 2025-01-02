@@ -1,0 +1,87 @@
+/* General Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Black dominant color */
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container Styling */
+.container {
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Headings */
+h1, h2 {
+    text-align: center;
+    color: #e0e0e0;
+    margin-bottom: 20px;
+}
+
+/* Summary Section */
+.summary p {
+    font-size: 1.1em;
+    margin: 10px 0;
+}
+
+/* Chart Container */
+.chart-container, .forecast-container, .trends-container, .debt-container, .reminder-container {
+    margin: 30px 0;
+}
+
+/* Back Button */
+.back-button {
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #4caf50;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #45a049;
+}
+
+/* Trend Chart */
+canvas {
+    max-width: 100%;
+    margin: 20px auto;
+}
+
+/* Debt Tracker & Reminder List */
+.debt-container ul, .reminder-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.debt-container li, .reminder-container li {
+    padding: 10px;
+    border-bottom: 1px solid #424242;
+}
+
+/* Minimal Styling for Responsiveness */
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    h1, h2 {
+        font-size: 1.5em;
+    }
+
+    p {
+        font-size: 1em;
+    }
+}
+
+
+

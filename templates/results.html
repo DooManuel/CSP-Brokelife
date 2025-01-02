@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Brokelife - Results</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Brokelife Results</h1>
+        <div class="summary">
+            <h2>Summary</h2>
+            <p><strong>Total Expenses:</strong> ${{ results['total_expenses'] }}</p>
+            <p><strong>Essential Expenses:</strong> ${{ results['essential_expenses'] }}</p>
+            <p><strong>Optional Expenses:</strong> ${{ results['optional_expenses'] }}</p>
+            <p><strong>Leftover Budget:</strong> ${{ results['leftover_budget'] }}</p>
+            <p><strong>Savings Goal:</strong> ${{ results['savings_goal'] }}</p>
+            <p><strong>Spending Recommendation:</strong> {{ results['recommendation'] }}</p>
+            <p><strong>Savings Advice:</strong> {{ results['savings_recommendation'] }}</p>
+        </div>
+
+        <div class="chart-container">
+            <h2>Expense Breakdown</h2>
+            <canvas id="expenseChart"></canvas>
+        </div>
+
+        <div class="forecast-container">
+            <h2>Expense Forecast</h2>
+            <p><strong>Forecasted Spending Next Month:</strong> ${{ results['forecasted_spending'] }}</p>
+        </div>
+
+        <div class="trends-container">
+            <h2>Expense Trends</h2>
+            <canvas id="trendsChart"></canvas>
+        </div>
+
+        <div class="debt-container">
+            <h2>Debt Tracker</h2>
+            {% if results['debts'] %}
+                <ul>
+                    {% for debt in results['debts'] %}
+                        <li><strong>{{ debt['name'] }}</strong>: ${{ debt['amount'] }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No debts added yet.</p>
+            {% endif %}
+        </div>
+
+        <div class="reminder-container">
+            <h2>Reminders</h2>
+            {% if results['reminders'] %}
+                <ul>
+                    {% for reminder in results['reminders'] %}
+                        <li>{{ reminder['title'] }} - Due: {{ reminder['due_date'] }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No reminders added yet.</p>
+            {% endif %}
+        </div>
+
+        <a href="/" class="back-button">Back to Home</a>
+    </div>
+
+    <!-- Chart.js for Visualization -->
+    <script>
+        // Expense Breakdown Chart
+        const ctxExpense = document.getElementById('expenseChart').getContext('2d');
+        const expenseChart = new Chart(ctxExpense, {
+            type: 'pie',
+            data: {
+                labels: ['Essential Expenses', 'Optional Expenses'],
+                datasets: [{
+                    data: [{{ results['essential_expenses'] }}, {{ results['optional_expenses'] }}],
+                    backgroundColor: ['#4caf50', '#ff5722'],
+                }],
+            },
+        });
+
+        // Expense Trends Chart
+        const ctxTrends = document.getElementById('trendsChart').getContext('2d');
+        const trendsData = {{ results['expense_trends'] | safe }};
+        const trendsChart = new Chart(ctxTrends, {
+            type: 'line',
+            data: {
+                labels: trendsData.map(item => item.date),
+                datasets: [{
+                    label: 'Total Expenses Over Time',
+                    data: trendsData.map(item => item.total),
+                    borderColor: '#1e88e5',
+                    fill: false,
+                }],
+            },
+        });
+    </script>
+</body>
+</html>
+
+
+
